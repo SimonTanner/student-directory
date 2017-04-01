@@ -32,6 +32,8 @@ def input_students
     students
 end
 
+new_students = input_students
+
 def print_header
     puts "The students of Villain Academy"
     puts "_ _ _ _ _ _ _ _ _ _ _"
@@ -47,9 +49,11 @@ def print_footer(names)
     puts "Overall, we have #{names.count()} great students"
 end
 
+new_students.each do |student|
+    students << student
+end
     
 # nothing happens until we call the methods
-students = input_students
 print_header
 print(students)
 print_footer(students)
