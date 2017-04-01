@@ -46,27 +46,55 @@ def print_header
 end
 
 def print(students)
-    puts "Would you like to output names beginning with a specific letter? y/n"
+    puts "If you would like to see a list of all students please enter \"y\" or \"n\" for other options:"
     choice = gets.chomp
-    if choice == "y"
+    
+    if choice == "n"
+        puts "1 - List names beginning with a specific letter"
+        puts "2 - List names of a certain length"
+        choice = gets.chomp
+    else
+    end
+    
+    if choice == "1"
         puts "Please enter a letter:"
-        letter = gets.chomp
+        choice_2 = gets.chomp
+    elsif choice == "2"
+        while true
+            puts "Please enter the length:"
+            choice_2 = gets.chomp
+            if choice_2 =~ /\d/
+                choice_2 = choice_2.to_i
+                break
+                
+            else
+                puts "That's not a number!"
+            end
+        end
     else
     end
     
     print_header
     
-    if letter == nil
+    if choice == nil || choice == "n"
         students.each_with_index do |student, index|
             puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
         end
-    else
+    elsif choice == "1"
         students.each_with_index do |student, index|
-            if student[:name][0].downcase == letter.downcase
+            if student[:name][0].downcase == choice_2.downcase
                 puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
             else
             end
         end
+    elsif choice == "2"
+        students.each_with_index do |student, index|
+            if student[:name].length <= choice_2
+                puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+            else
+            end
+        end
+    else
     end
 end
 
