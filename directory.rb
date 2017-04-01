@@ -35,8 +35,11 @@ end
 new_students = input_students
 
 def add_students(newbies)
-    newbies.each do |student|
+    index = 0
+    until index == newbies.length
+        student = newbies[index]
         $students << student
+        index +=1
     end
 end
 
@@ -77,24 +80,39 @@ def print(students)
     print_header
     
     if choice == nil || choice == "n"
-        students.each_with_index do |student, index|
+        index = 0
+        until index == students.length
+            student = students[index]
             puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+            index += 1
         end
     elsif choice == "1"
-        students.each_with_index do |student, index|
+        index = 0
+        until index == students.length
+            student = students[index]
             if student[:name][0].downcase == choice_2.downcase
                 puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
             else
             end
+            index +=1
         end
     elsif choice == "2"
-        students.each_with_index do |student, index|
+        index = 0
+        until index == students.length
+            student = students[index]
             if student[:name].length <= choice_2
                 puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
             else
             end
+            index += 1
         end
     else
+        index = 0
+        until index == students.length
+            student = students[index]
+            puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+            index += 1
+        end
     end
 end
 
