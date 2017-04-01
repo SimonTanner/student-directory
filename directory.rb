@@ -46,8 +46,27 @@ def print_header
 end
 
 def print(students)
-    students.each_with_index do |student, index|
-        puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+    puts "Would you like to output names beginning with a specific letter? y/n"
+    choice = gets.chomp
+    if choice == "y"
+        puts "Please enter a letter:"
+        letter = gets.chomp
+    else
+    end
+    
+    print_header
+    
+    if letter == nil
+        students.each_with_index do |student, index|
+            puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+        end
+    else
+        students.each_with_index do |student, index|
+            if student[:name][0].downcase == letter.downcase
+                puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+            else
+            end
+        end
     end
 end
 
@@ -58,6 +77,6 @@ end
     
 # nothing happens until we call the methods
 add_students(new_students)
-print_header
+
 print($students)
 print_footer($students)
