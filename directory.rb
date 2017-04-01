@@ -1,5 +1,5 @@
 # Let's put all the students into an array
-students = [
+$students = [
 {name: "Dr. Hannibal Lecter", cohort: :november},
 {name: "Darth Vader", cohort: :november},
 {name: "Nurse Ratched", cohort: :november},
@@ -32,14 +32,22 @@ def input_students
     students
 end
 
+new_students = input_students
+
+def add_students(newbies)
+    newbies.each do |student|
+        $students << student
+    end
+end
+
 def print_header
     puts "The students of Villain Academy"
     puts "_ _ _ _ _ _ _ _ _ _ _"
 end
 
 def print(students)
-    students.each do |student|
-        puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    students.each_with_index do |student, index|
+        puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
     end
 end
 
@@ -49,7 +57,7 @@ end
 
     
 # nothing happens until we call the methods
-students = input_students
+add_students(new_students)
 print_header
-print(students)
-print_footer(students)
+print($students)
+print_footer($students)
