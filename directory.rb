@@ -13,6 +13,9 @@ $students = [
 {name: "Norman Bates", cohort: :november}
 ]
 
+$months = ["january", "february", "march", "april", "may", "june", "july", 
+"august", "september", "october", "november", "december"]
+
 def input_students
     puts "Please enter the names of the students"
     puts "To finish, just hit return twice"
@@ -26,7 +29,7 @@ def input_students
         # add the student hash to the array
         puts "Please enter the cohort"
         cohort = gets.chomp
-        cohort.to_sym
+        cohort = cohort.to_sym
         puts "Please enter the country of birth"
         country = gets.chomp
         puts "What are there hobbies?"
@@ -70,6 +73,7 @@ def print_students(students)
     if choice == "n"
         puts "1 - List names beginning with a specific letter"
         puts "2 - List names of a certain length"
+        puts "3 - List students by cohort"
         choice = gets.chomp
     else
     end
@@ -89,6 +93,17 @@ def print_students(students)
                 puts "That's not a number!"
             end
         end
+    elsif choice == "3"
+        puts "Please enter a month"
+        choice_2 = gets.chomp
+        choice_2.downcase!
+        until $months.include? choice_2
+            puts "Please enter a valid month"
+            choice_2 = gets.chomp
+            choice_2.downcase!
+        end
+        choice_2 = choice_2.to_sym
+        puts choice_2.is_a? Symbol
     else
     end
     
@@ -116,6 +131,16 @@ def print_students(students)
         until index == students.length
             student = students[index]
             if student[:name].length <= choice_2
+                format_text(student, index)
+            else
+            end
+            index += 1
+        end
+    elsif choice == "3"
+        index = 0
+        until index == students.length
+            student = students[index]
+            if student[:cohort] == choice_2
                 format_text(student, index)
             else
             end
