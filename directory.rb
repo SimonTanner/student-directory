@@ -58,7 +58,12 @@ def print_header
     puts "_ _ _ _ _ _ _ _ _ _ _"
 end
 
-def print(students)
+def format_text(student, index)
+    print "#{index + 1}.".center(5) + " #{student[:name]}".center(40)
+    print "(#{student[:cohort]} cohort)".center(20) + "\n"
+end
+
+def print_students(students)
     puts "If you would like to see a list of all students please enter \"y\" or \"n\" for other options:"
     choice = gets.chomp
     
@@ -93,7 +98,7 @@ def print(students)
         index = 0
         until index == students.length
             student = students[index]
-            puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+            format_text(student, index)
             index += 1
         end
     elsif choice == "1"
@@ -101,7 +106,7 @@ def print(students)
         until index == students.length
             student = students[index]
             if student[:name][0].downcase == choice_2.downcase
-                puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+                format_text(student, index)
             else
             end
             index +=1
@@ -111,7 +116,7 @@ def print(students)
         until index == students.length
             student = students[index]
             if student[:name].length <= choice_2
-                puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+                format_text(student, index)
             else
             end
             index += 1
@@ -120,7 +125,7 @@ def print(students)
         index = 0
         until index == students.length
             student = students[index]
-            puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+            format_text(student, index)
             index += 1
         end
     end
@@ -133,5 +138,5 @@ end
     
 # nothing happens until we call the methods
 add_students(new_students)
-print($students)
+print_students($students)
 print_footer($students)
