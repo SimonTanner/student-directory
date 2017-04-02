@@ -20,14 +20,24 @@ def input_students
     students = []
     #get the first name
     name = gets.chomp
+    
     # while the name is not empty, repeat this code
     while !name.empty? do
         # add the student hash to the array
-        students << {name: name, cohort: :november}
+        puts "Please enter the cohort"
+        cohort = gets.chomp
+        cohort.to_sym
+        puts "Please enter the country of birth"
+        country = gets.chomp
+        puts "What are there hobbies?"
+        hobbies = gets.chomp
+        
+        students << {name: name, cohort: cohort, country: country, hobbies: hobbies}
         puts "Now we have #{students.count()} students"
         #get another name from the user
         name = gets.chomp
     end
+    
     # return the array of students
     students
 end
@@ -123,6 +133,5 @@ end
     
 # nothing happens until we call the methods
 add_students(new_students)
-
 print($students)
 print_footer($students)
