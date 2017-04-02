@@ -1,5 +1,10 @@
 @students = [] # an empty array accessible to all methods
 
+def add_student(name, cohort = :november)
+    @students << {name: name, cohort: cohort}
+end
+
+
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
@@ -8,7 +13,7 @@ def input_students
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
-    @students << {name: name, cohort: :november}
+    add_student(name)
     puts "Now we have #{@students.count} students"
     # get another name from the user
     name = STDIN.gets.chomp
@@ -34,8 +39,8 @@ def print_menu
     #1. print the menu and ask the user what to do
     puts "1. Input the students"
     puts "2. Show the students"
-    puts "3. Save the list to students.csv"
-    puts "4. Load the list from students.csv"
+    puts "3. Save the list to a file"
+    puts "4. Load the list from a file"
     puts "9. Exit"
 end
 
@@ -46,9 +51,9 @@ def show_students
     print_footer(@students)
 end
 
-def save_students
+def save_students(filename = "students.csv" )
     # open the file for writing
-    file = File.open("students.csv", "w")
+    file = File.open(filename, "w")
     # iterate over the array of students
     @students.each do |student|
         student_data = [student[:name], student[:cohort]]
@@ -60,9 +65,10 @@ end
 
 def load_students(filename = "students.csv")
     file = File.open(filename, "r")
+    @students = []
     file.readlines.each do |line|
         name, cohort = line.chomp.split(',')
-        @students << {name: name, cohort: cohort.to_sym}
+        add_student(name, cohort.to_sym)
     end
     file.close
 end
@@ -70,15 +76,25 @@ end
 
 def try_load_students
     filename = ARGV.first # first argument from the command line
-    return if filename.nil? # get out of the method if it isn't given
-    
-    if File.exists?(filename) # if it exists
+    if filename.nil? 
+        load_students
+        
+    elsif File.exists?(filename) # if it exists
         load_students(filename)
         puts "Loaded #{@students.count} from #{filename}"
     else # if it doesn't exist
         puts "Sorry, #{filename} doesn't exist."
         exit # quit the program
     end
+end
+
+def file_name(filename)
+    while filename == ""
+        puts "You have to enter a name fo the file"
+        filename = STDIN.gets.chomp
+    end
+    filename = filename + ".csv"
+    filename
 end
     
 
@@ -94,12 +110,20 @@ def process(selection)
             
         when "3"
             # save students list to students.csv
-            save_students
+            puts "Please enter the name for the file"
+            filename = STDIN.gets.chomp
+            filename = file_name(filename)
+            save_students(filename)
+                
+            puts "File #{filename} has been saved"
             
         when "4"
             # load a list of students from the file students.csv
-            load_students
-            puts "Student list loaded from students.csv"
+            puts "Please enter the name of the file you wish to open"
+            filename = STDIN.gets.chomp
+            filename = file_name(filename)
+            load_students(filename)
+            puts "Student list loaded from #{filename}"
             
         when "9"
             exit # this will cause the program to terminate
